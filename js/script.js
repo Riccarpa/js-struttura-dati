@@ -7,31 +7,43 @@ BONUS: provare a creare una funzione che stampi la carta in pagina.
 */
 
 
+
+
+
+
+
+
 // link to html
 
-const cardDisplay = document.getElementById['card'];
+const cardDisplay = document.getElementById('card');
 
 //variabili esterne
 const nome = 'Grizly bear'
 const genericMana = '1';
 const forestMana = 'Forest';
 const cardPicture = 'img.png';
-const cardType = 'creature';
+let cardType = 'creature';
 const specification = 'Bear';
-const edition = 'X';
+const edition = 'X ';
 const rarity = 'Common';
 const tap = 'tap';
 const cardEffect = 'Distruggi tutto';
-const cardHistory = 'Orso brutto e cattivo';
+const cardEffect2 = 'Distruggi ancora';
+let cardHistory = 'Orso brutto e cattivo';
 const painter = 'Picasso';
-const collection = '7/300';
+const collection = ' 7/300';
 const strength = '3';
 const costitution = '3';
 
+// verifica presenza degli elementi variabili da carta a carta
 
+if (specification) {
+    cardType += ' - '
+}
 
-
-
+if (cardEffect2) {
+    cardHistory = '';
+}
 
 // struttura della carta
 
@@ -56,10 +68,53 @@ const card = {
         painter: painter,
         collection: collection
     },
-    Power: {
-        strength: strength,
-        costitution: costitution
+    Power: `${strength}/${costitution}`
+
+
+};
+
+
+//stampa in pagina 
+
+// const printCard = ` 
+// <ul>
+// <li>${card.name}</li>
+// <li>${card.summonValue}</li>
+// <li>${propertyExtract(card.Description)}</li>
+// <li>${propertyExtract(card.Expansion)} </li>
+// <li>${propertyExtract(card.Text)} </li>
+// <li>${propertyExtract(card.References)} </li>
+// <li>${propertyExtract(card.Power)} </li>
+// </ul>
+// `;
+
+cardDisplay.innerHTML = PrintObject(card);
+
+
+
+
+
+//functions***************************************************
+
+
+//estrai proprieta di oggetti
+function propertyExtract(obj) {
+    let properties = '';
+    for (let key in obj) {
+        properties += obj[key];
     }
-
-
+    return properties;
 }
+
+//stampa in pagina
+
+function PrintObject(obj) {
+    let itemToPrint = '<ul>'
+    for (let key in obj) {
+        itemToPrint += `<li> ${propertyExtract(obj[key])} </li>`;
+    }
+    itemToPrint += '</ul>';
+    return itemToPrint;
+}
+
+PrintObject(card);
