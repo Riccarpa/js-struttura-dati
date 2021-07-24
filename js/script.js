@@ -1,12 +1,8 @@
 /* 
 
 
-Completiamo il nostro archivio delle carte aggiungendo i seguenti step:
-Creiamo un mazzo di carte
-Stampiamo tutte  le carte su schermo
-Aggiungiamo un piccolo form in HTML
-Ragioniamo pian pianino sulla logica dei filtri
-:avviso:IMPORTANTE:avviso:
+
+
 Siccome siete stati troppo bravi a creare un oggetto card molto complesso, è molto complicato riuscire a filtrare tutte le proprietà.
 PERTANTO IL MINIMO RICHIESTO E':
  Filtrare prima le proprietà con valori semplici (stringhe o numeri)
@@ -19,10 +15,12 @@ Forza ragazzi! Buon lavoro e buon weekend! :faccia_leggermente_sorridente: (modi
 
 
 
-
 // link to html
 
-const cardDisplay = document.getElementById('card');
+let cardDisplay = document.getElementById('card');
+const button = document.getElementById('button');
+const getAttribute = document.getElementById('attribute');
+const getAttributeText = document.getElementById('attribute-text');
 
 
 
@@ -50,7 +48,7 @@ const card = {
         painter: 'Picasso ',
         collection: '7/300'
     },
-    Power: '3/3'
+    Power: '12/11'
 
 
 };
@@ -77,7 +75,7 @@ const card1 = {
         painter: 'Rothko ',
         collection: '2/200'
     },
-    Power: '6/6'
+    Power: '12/12'
 
 
 };
@@ -86,7 +84,7 @@ const card1 = {
 const card2 = {
 
     Name: 'Progenitus',
-    SummonValue: '6, palude X2 ',
+    SummonValue: '6, Palude X2 ',
     Picture: 'Img.png',
     Description: {
         cardType: 'Creatura Leggendaria',
@@ -105,11 +103,10 @@ const card2 = {
         painter: 'Kandinsky ',
         collection: '4/100'
     },
-    Power: '10/12'
+    Power: '12/12'
 
 
 };
-
 
 
 //creo in deck
@@ -117,15 +114,13 @@ const deck = [];
 deck.push(card, card1, card2);
 
 
-
-// impostazione elementi variabili da carta a carta
-
+// impostazione elementi variabili carte deck
 for (let i = 0; i < deck.length; i++) {
     let currentObj = deck[i];
 
 
     if (currentObj.Description.specification) {
-        currentObj.Description.cardType = ' - ';
+        currentObj.Description.cardType += ' - ';
     }
     if (currentObj.Text.cardEffect2) {
         currentObj.Text.history = '';
@@ -144,12 +139,36 @@ for (let i = 0; i < deck.length; i++) {
 }
 
 
-
 // stampo il deck
-
-
 cardDisplay.innerHTML = mountDeck(deck);
 
+// pulsansi ricerca 
+
+attribute.addEventListener('change', () => {
+
+    getAttributeText.classList.remove('hidden');
+})
+button.addEventListener('click', () => {
+
+    let attribute = getAttribute.value;
+    let attributeText = getAttributeText.value;
+
+    const filteredCards = [];
+
+    for (i = 0; i < deck.length; i++) {
+        currentObj = deck[i];
+
+        if (currentObj[attribute] == attributeText) {
+            filteredCards.push(currentObj);
+
+        }
+    }
+
+    cardDisplay.innerHTML = mountDeck(filteredCards);
+
+
+
+})
 
 
 
@@ -184,8 +203,8 @@ function mountObject(obj) {
 
 function mountDeck(arr) {
     let itemToPrint = [];
-    for (let i = 0; i < deck.length; i++) {
-        let currentObj = deck[i];
+    for (let i = 0; i < arr.length; i++) {
+        let currentObj = arr[i];
         itemToPrint.push(mountObject(currentObj));
 
     }
