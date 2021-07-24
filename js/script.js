@@ -1,16 +1,8 @@
 /* 
-
-
-
-
-
 BONUS:
-Far sì che se filtro una proprietà con valore stringa, riesca a mostrare la carta anche se non scrivo il suo testo interamente (es: cerco il nome digitando "creat" e riesco a trovare nei risultati le carte che hanno nel nome "creatura")
 Filtrare anche altre proprietà i cui valori sono più complessi, se ne avete (oggetti, array di oggetti)
 Forza ragazzi! Buon lavoro e buon weekend! :faccia_leggermente_sorridente: (modificato) 
 */
-
-
 
 // link to html
 
@@ -146,6 +138,8 @@ attribute.addEventListener('change', () => {
 
     getAttributeText.classList.remove('hidden');
 })
+
+//filter
 button.addEventListener('click', () => {
 
     let attribute = getAttribute.value;
@@ -178,11 +172,6 @@ button.addEventListener('click', () => {
 
 
 
-
-
-
-
-
 //functions***************************************************
 
 
@@ -195,7 +184,7 @@ function propertyExtract(obj) {
     return properties;
 }
 
-//stampa in pagina
+//monto oggetti e array
 
 function mountObject(obj) {
     let itemToPrint = '<ul>'
