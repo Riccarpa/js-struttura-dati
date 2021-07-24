@@ -1,14 +1,21 @@
 /* 
-Descrizione:
-Proviamo a ripetere quanto visto in classe, creando la struttura che riteniamo più adeguata per rappresentare una carta di Magic.
-Una volta definita la struttura, stampiamo sulla pagina HTML tutte le informazioni relative alla carta stessa, 
-senza particolare attenzione a dettagli grafici (va bene una lista coi tag UL e LI)
-BONUS: provare a creare una funzione che stampi la carta in pagina.
+
+
+Completiamo il nostro archivio delle carte aggiungendo i seguenti step:
+Creiamo un mazzo di carte
+Stampiamo tutte  le carte su schermo
+Aggiungiamo un piccolo form in HTML
+Ragioniamo pian pianino sulla logica dei filtri
+:avviso:IMPORTANTE:avviso:
+Siccome siete stati troppo bravi a creare un oggetto card molto complesso, è molto complicato riuscire a filtrare tutte le proprietà.
+PERTANTO IL MINIMO RICHIESTO E':
+ Filtrare prima le proprietà con valori semplici (stringhe o numeri)
+Filtrare le proprietà il cui valore è un array di stringhe
+BONUS:
+Far sì che se filtro una proprietà con valore stringa, riesca a mostrare la carta anche se non scrivo il suo testo interamente (es: cerco il nome digitando "creat" e riesco a trovare nei risultati le carte che hanno nel nome "creatura")
+Filtrare anche altre proprietà i cui valori sono più complessi, se ne avete (oggetti, array di oggetti)
+Forza ragazzi! Buon lavoro e buon weekend! :faccia_leggermente_sorridente: (modificato) 
 */
-
-
-
-
 
 
 
@@ -17,78 +24,135 @@ BONUS: provare a creare una funzione che stampi la carta in pagina.
 
 const cardDisplay = document.getElementById('card');
 
-//variabili esterne
-const nome = 'Grizly bear'
-const genericMana = '1';
-const forestMana = 'Forest';
-const cardPicture = 'img.png';
-let cardType = 'creature';
-const specification = 'Bear';
-const edition = 'X ';
-const rarity = 'Common';
-const tap = 'tap';
-const cardEffect = 'Distruggi tutto';
-const cardEffect2 = 'Distruggi ancora';
-let cardHistory = 'Orso brutto e cattivo';
-const painter = 'Picasso';
-const collection = ' 7/300';
-const strength = '3';
-const costitution = '3';
 
-// verifica presenza degli elementi variabili da carta a carta
 
-if (specification) {
-    cardType += ' - '
-}
-
-if (cardEffect2) {
-    cardHistory = '';
-}
-
-// struttura della carta
+// carte
 
 const card = {
 
-    name: nome,
-    summonValue: `${genericMana} ${forestMana}`,
-    Picture: cardPicture,
+    Name: 'Grizly bear',
+    SummonValue: '1 Forest',
+    Picture: 'Img.png',
     Description: {
-        cardType: cardType,
-        specification: specification
+        cardType: 'Creature',
+        specification: 'Bear'
     },
     Expansion: {
-        edition: edition,
-        rarity: rarity
+        edition: 'X ',
+        rarity: 'Common'
     },
     Text: {
-        effect: `${forestMana} ${tap}: ${cardEffect} `,
-        history: cardHistory
+        effect: 'Mana tap: Distruggi tutto <br>',
+        cardEffect2: '',
+        history: 'Orso brutto e cattivo'
     },
     References: {
-        painter: painter,
-        collection: collection
+        painter: 'Picasso ',
+        collection: '7/300'
     },
-    Power: `${strength}/${costitution}`
+    Power: '3/3'
+
+
+};
+
+const card1 = {
+
+    Name: 'Bloodfire colossum',
+    SummonValue: '6, Mountain X2 ',
+    Picture: 'Img.png',
+    Description: {
+        cardType: 'Creature',
+        specification: 'Giant'
+    },
+    Expansion: {
+        edition: '9 ',
+        rarity: 'Rare'
+    },
+    Text: {
+        effect: 'Mana tap: Distruggi tutto <br>',
+        cardEffect2: 'Mana tap: Distruggi tutto <br>',
+        history: 'Gigante brutto e cattivo'
+    },
+    References: {
+        painter: 'Rothko ',
+        collection: '2/200'
+    },
+    Power: '6/6'
 
 
 };
 
 
-//stampa in pagina 
+const card2 = {
 
-// const printCard = ` 
-// <ul>
-// <li>${card.name}</li>
-// <li>${card.summonValue}</li>
-// <li>${propertyExtract(card.Description)}</li>
-// <li>${propertyExtract(card.Expansion)} </li>
-// <li>${propertyExtract(card.Text)} </li>
-// <li>${propertyExtract(card.References)} </li>
-// <li>${propertyExtract(card.Power)} </li>
-// </ul>
-// `;
+    Name: 'Progenitus',
+    SummonValue: '6, palude X2 ',
+    Picture: 'Img.png',
+    Description: {
+        cardType: 'Creatura Leggendaria',
+        specification: 'Idra'
+    },
+    Expansion: {
+        edition: '11 ',
+        rarity: 'Mitica'
+    },
+    Text: {
+        effect: 'Mana tap: Distruggi tutto <br>',
+        cardEffect2: 'Mana tap: Distruggi tutto <br>',
+        history: 'Idra brutta e cattivo'
+    },
+    References: {
+        painter: 'Kandinsky ',
+        collection: '4/100'
+    },
+    Power: '10/12'
 
-cardDisplay.innerHTML = PrintObject(card);
+
+};
+
+
+
+//creo in deck
+const deck = [];
+deck.push(card, card1, card2);
+
+
+
+// impostazione elementi variabili da carta a carta
+
+for (let i = 0; i < deck.length; i++) {
+    let currentObj = deck[i];
+
+
+    if (currentObj.Description.specification) {
+        currentObj.Description.cardType = ' - ';
+    }
+    if (currentObj.Text.cardEffect2) {
+        currentObj.Text.history = '';
+        currentObj.Text.cardEffect2 = `Effect 2:
+        ${currentObj.Text.cardEffect2}`;
+    }
+    if (currentObj.Text.effect) {
+        currentObj.Text.effect = ` <br> Effect:
+        ${currentObj.Text.effect}`;
+    }
+    if (currentObj.Text.history) {
+        currentObj.Text.history = `History: ${currentObj.Text.history}`
+    }
+
+
+}
+
+
+
+// stampo il deck
+
+
+cardDisplay.innerHTML = mountDeck(deck);
+
+
+
+
 
 
 
@@ -108,13 +172,23 @@ function propertyExtract(obj) {
 
 //stampa in pagina
 
-function PrintObject(obj) {
+function mountObject(obj) {
     let itemToPrint = '<ul>'
     for (let key in obj) {
-        itemToPrint += `<li> ${propertyExtract(obj[key])} </li>`;
+        itemToPrint += `<li> <strong>${key}:</strong> ${propertyExtract(obj[key])} </li>`;
     }
     itemToPrint += '</ul>';
     return itemToPrint;
 }
 
-PrintObject(card);
+
+function mountDeck(arr) {
+    let itemToPrint = [];
+    for (let i = 0; i < deck.length; i++) {
+        let currentObj = deck[i];
+        itemToPrint.push(mountObject(currentObj));
+
+    }
+
+    return itemToPrint;
+}
