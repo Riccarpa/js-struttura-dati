@@ -3,10 +3,7 @@
 
 
 
-Siccome siete stati troppo bravi a creare un oggetto card molto complesso, è molto complicato riuscire a filtrare tutte le proprietà.
-PERTANTO IL MINIMO RICHIESTO E':
- Filtrare prima le proprietà con valori semplici (stringhe o numeri)
-Filtrare le proprietà il cui valore è un array di stringhe
+
 BONUS:
 Far sì che se filtro una proprietà con valore stringa, riesca a mostrare la carta anche se non scrivo il suo testo interamente (es: cerco il nome digitando "creat" e riesco a trovare nei risultati le carte che hanno nel nome "creatura")
 Filtrare anche altre proprietà i cui valori sono più complessi, se ne avete (oggetti, array di oggetti)
@@ -29,7 +26,7 @@ const getAttributeText = document.getElementById('attribute-text');
 const card = {
 
     Name: 'Grizly bear',
-    SummonValue: '1 Forest',
+    SummonValue: ['1', 'Forest'],
     Picture: 'Img.png',
     Description: {
         cardType: 'Creature',
@@ -56,7 +53,7 @@ const card = {
 const card1 = {
 
     Name: 'Bloodfire colossum',
-    SummonValue: '6, Mountain X2 ',
+    SummonValue: ['6', 'Mountain X2'],
     Picture: 'Img.png',
     Description: {
         cardType: 'Creature',
@@ -84,7 +81,7 @@ const card1 = {
 const card2 = {
 
     Name: 'Progenitus',
-    SummonValue: '6, Palude X2 ',
+    SummonValue: ['6', 'Mountain X2'],
     Picture: 'Img.png',
     Description: {
         cardType: 'Creatura Leggendaria',
@@ -107,6 +104,7 @@ const card2 = {
 
 
 };
+
 
 
 //creo in deck
@@ -153,15 +151,23 @@ button.addEventListener('click', () => {
     let attribute = getAttribute.value;
     let attributeText = getAttributeText.value;
 
+    //filter
     const filteredCards = [];
 
     for (i = 0; i < deck.length; i++) {
         currentObj = deck[i];
 
-        if (currentObj[attribute] == attributeText) {
+        if (currentObj[attribute].indexOf(attributeText) > 0) {
             filteredCards.push(currentObj);
 
         }
+        if (currentObj[attribute].includes(attributeText)) {
+            filteredCards.push(currentObj);
+
+        }
+
+
+
     }
 
     cardDisplay.innerHTML = mountDeck(filteredCards);
